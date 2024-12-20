@@ -96,7 +96,10 @@ class Tree:
 
         # append something if this is a readout
         if self.is_read_out:
-            batch[:, self.index] = is_active
+            values = (
+                is_active if self.is_binary else torch.rand_like(is_active) * is_active
+            )
+            batch[:, self.index] = values
 
         active_child = None
         if self.mutually_exclusive_children:
